@@ -166,6 +166,37 @@ data = [-9,-7,-5,-3,-1,0,1,3,4,5,6,7] # 列表
 # print(new_data1)
 
 
-se1 = {11,55,56,23,78}
-se2 = {55,77,96,23,88}
-print(se1 & se2)
+# se1 = {11,55,56,23,78}
+# se2 = {55,77,96,23,88}
+# print(se1 & se2)
+
+# lst_num = [1,2,3]
+# lst_str = ['a','b','c','d','e','f']
+#
+# dct = dict(zip(lst_str,lst_num))
+# print(dct)
+#
+# lst = list(zip(lst_str,lst_num))
+# print(lst)
+#
+# tup = tuple(zip(lst_str,lst_num))
+# print(tup)
+#
+# st = set(zip(lst_str,lst_num))
+# print(st)
+
+# lst = [11,22,33]
+# lst.append(44)
+# lst2 = lst
+# print(f'原始数据：{lst} 数据地址:{id(lst)}')  # 原始数据：[11, 22, 33, 44] 数据地址:2365203668096
+# print(f'修改后的数据：{lst2} 修改后的数据地址:{id(lst2)}') # 修改后的数据：None 修改后的数据地址:140732517739720
+
+import copy
+lst = [11,22,33,[44,55]]
+new_lst = copy.deepcopy(lst)
+
+print(f'原始数据：{lst} 数据地址:{id(lst)}')
+print(f'深拷贝的数据：{new_lst} 深拷贝的数据地址:{id(new_lst)}')
+
+print(f'原始列表元素数据地址:{id(lst[0])}  {id(lst[-1])}')
+print(f'深拷贝的列表元素数据地址：{id(new_lst[0])}  {id(new_lst[-1])}')

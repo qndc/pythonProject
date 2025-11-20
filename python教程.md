@@ -555,3 +555,109 @@ unique_lengths = {len(s) for s in ["aa", "bbb", "bb"]} # 将字符串长度放�
 2. float(数据)：将数据转换为浮点数，数据要求是：整数、浮点数、被引号包围的整数、被引号包围的浮点数
 3. bool(数据)：非零非空为True，为零为空为False
 4. str(数据)：将数据转换为字符串，列表转换为字符串不是把元素组合起来，列表的中括号也会被转换进来
+5. eval(str): 把字符串列表的引号去掉，把中间的内容作为python表达式执行
+6. list()
+7. tuple():
+8. dict()：有多种格式，dict({(k1,v1),(k2,v2)})、dict(k1=v1,k2=v2)
+9. set() ,转换为集合后，元素顺序是无序的
+10. zip(可迭代对象1，可迭代对象2)，将多个可迭代对象中的元素取出放到元组中，再根据需要转换成指定的数据形式
+```python
+lst_num = [1,2,3]
+lst_str = ['a','b','c']
+dct = dict(zip(lst_str,lst_num))
+print(dct)  # {'a': 1, 'b': 2, 'c': 3}
+
+lst = list(zip(lst_str,lst_num))
+print(lst) # [('a', 1), ('b', 2), ('c', 3)]
+
+tup = tuple(zip(lst_str,lst_num))
+print(tup) # (('a', 1), ('b', 2), ('c', 3))
+
+st = set(zip(lst_str,lst_num))
+print(st) # {('a', 1), ('b', 2), ('c', 3)}
+
+# 注意，zip这个函数只会将这些可迭代对象中的能一一对应上的元素进行组合，对应不上的直接忽略掉
+lst_num1 = [1,2,3,4,5]
+lst_str1 = ['a','b','c']
+dct1 = dict(zip(lst_str,lst_num))
+print(dct1)  # {'a': 1, 'b': 2, 'c': 3}  ，多余的忽略掉
+
+lst_num2 = [1,2,3]
+lst_str2 = ['a','b','c','d','e','f']
+dct2 = dict(zip(lst_str,lst_num))
+print(dct2)  # {'a': 1, 'b': 2, 'c': 3}  ，多余的忽略掉
+```
+
+
+# 深拷贝 & 浅拷贝
+深拷贝：指创建一个新的对象，并且递归的复制原对象中的所有元素<br>
+浅拷贝：指创建一个新的对象，其内容是原始对象中元素的引用的拷贝，只是拷贝了引用并没有拷贝数据
+
+不可变数据类型：数值型（int/float/boll/complex）、字符串（str）、元组（tuple）。修改数据时，数据所在地址一定会发生改变，定义新变量接受修改后的数据<br>
+可变数据类型：列表(list)、字典(dict)、集合(set)，修改数据时，数据所在的地址不会变，不需要新变量接收修改后的数据，打印原变量就可以数据修改后的数据，就算用新变量接收这个修改后的列表，打印的是None
+
+Java 与 Python 最大的不同点：`Java 的基本类型不是对象`<br>
+Python：<br>
+一切皆对象<br>
+int，float，bool 都是对象（immutable不可变）<br>
+
+Java：<br>
+有基本类型（primitive type）：int, float, double, boolean...<br>
+primitive 类型不是对象，不存在“可变 / 不可变”概念，它们是值存储在栈中。<br>
+同时 Java 还有包装类（对象）：<br>
+Integer、Double、Boolean → 这些是 immutable(不可变) 的<br>
+
+| 类型       | Python             | Java                               |
+| -------- |--------------------| ---------------------------------- |
+| 数值类型     | 全是对象（immutable不可变） | primitive 不是对象；包装类是对象（且 immutable） |
+| 字符串      | immutable          | immutable                          |
+| 元组 tuple | immutable          | Java 无对应结构                         |
+| 列表 list  | mutable (可变)       | ArrayList 是 mutable                |
+| 字典 dict  | mutable            | HashMap 是 mutable                  |
+| 集合 set   | mutable            | HashSet 是 mutable                  |
+
+可使用`id(对象名)` 查看数据所在地址
+
+```python
+
+lst = [11,22,33]
+lst2 = lst.append(44)
+
+print(f'原始数据：{lst} 数据地址:{id(lst)}')  # 原始数据：[11, 22, 33, 44] 数据地址:2365203668096
+print(f'修改后的数据：{lst2} 修改后的数据地址:{id(lst2)}') # 修改后的数据：None 修改后的数据地址:140732517739720
+```
+
+深浅拷贝语法：
+1. 浅拷贝：copy.copy(数据),适用于简单对象，复制速度更快，占用空间更小
+2. 深拷贝：copy.deepcopy(数据)，`注意！！！ 如果深拷贝的对象是不可变对象，那么就算拷贝了，数据内存地址也是一样的`
+
+```python
+
+import copy
+lst = [11,22,33]
+new_lst = copy.copy(lst)
+
+print(f'原始数据：{lst} 数据地址:{id(lst)}') # 原始数据：[11, 22, 33, 44] 数据地址:2317185324672
+print(f'浅拷贝的数据：{new_lst} 浅拷贝的数据地址:{id(new_lst)}') # 浅拷贝的数据：[11, 22, 33] 浅拷贝的数据地址:2318770167360
+
+print(f'原始列表元素数据地址:{id(lst[0])}  {id(lst[-1])}') #原始列表元素数据地址:140732519212136  140732519212840
+print(f'浅拷贝的列表元素数据地址：{id(new_lst[0])}  {id(new_lst[-1])}') # 浅拷贝的列表元素数据地址：140732519212136  140732519212840
+
+# 所以可以看到，浅拷贝时，数据拷贝成功，并创建了新对象，打印了新对象的地址，但是原列表和拷贝后的列表的元素的地址都一致🌟🌟🌟
+
+import copy
+lst1 = [11,22,33,[44,55]]
+new_lst1 = copy.deepcopy(lst1)
+
+print(f'原始数据：{lst1} 数据地址:{id(lst1)}')
+print(f'深拷贝的数据：{new_lst1} 深拷贝的数据地址:{id(new_lst1)}')
+
+print(f'原始列表元素数据地址:{id(lst1[0])}  {id(lst1[-1])}')
+print(f'深拷贝的列表元素数据地址：{id(new_lst1[0])}  {id(new_lst1[-1])}') 
+
+#原始列表元素数据地址:140732519212136  2822649353024
+#深拷贝的列表元素数据地址：140732519212136  2822650780864
+
+# 这里可以看到，深拷贝的列表元素如果是不可变的（lst1[0]），数据地址就不会变；深拷贝的列表元素如果是可变的（lst1[-1]），数据地址就会变；
+
+```
