@@ -191,12 +191,84 @@ data = [-9,-7,-5,-3,-1,0,1,3,4,5,6,7] # 列表
 # print(f'原始数据：{lst} 数据地址:{id(lst)}')  # 原始数据：[11, 22, 33, 44] 数据地址:2365203668096
 # print(f'修改后的数据：{lst2} 修改后的数据地址:{id(lst2)}') # 修改后的数据：None 修改后的数据地址:140732517739720
 
-import copy
-lst = [11,22,33,[44,55]]
-new_lst = copy.deepcopy(lst)
+# import copy
+# lst = [11,22,33,[44]]
+# new_lst = copy.copy(lst)
+#
+# print(f'原始数据：{lst} 数据地址:{id(lst)}') # 原始数据：[11, 22, 33, 44] 数据地址:2317185324672
+# print(f'浅拷贝的数据：{new_lst} 浅拷贝的数据地址:{id(new_lst)}') # 浅拷贝的数据：[11, 22, 33] 浅拷贝的数据地址:2318770167360
+#
+# new_lst[-1] = [55]
+#
+# print(f'原始数据：{lst} 数据地址:{id(lst)}') # 原始数据：[11, 22, 33, 44] 数据地址:2317185324672
+# print(f'浅拷贝的数据：{new_lst} 浅拷贝的数据地址:{id(new_lst)}') # 浅拷贝的数据：[11, 22, 33] 浅拷贝的数据地址:2318770167360
+#
+#
+# print(f'原始列表元素数据地址:{id(lst[0])}  {id(lst[-1])}') #原始列表元素数据地址:140732519212136  140732519212840
+# print(f'浅拷贝的列表元素数据地址：{id(new_lst[0])}  {id(new_lst[-1])}') # 浅拷贝的列表元素数据地址：140732519212136  140732519212840
 
-print(f'原始数据：{lst} 数据地址:{id(lst)}')
-print(f'深拷贝的数据：{new_lst} 深拷贝的数据地址:{id(new_lst)}')
+# def func():
+#     """
+#     函数的注释内容
+#     :return: 返回值
+#     """
+#     pass
 
-print(f'原始列表元素数据地址:{id(lst[0])}  {id(lst[-1])}')
-print(f'深拷贝的列表元素数据地址：{id(new_lst[0])}  {id(new_lst[-1])}')
+# def func(name, age):
+#     print(f'姓名:{name} 年龄:{age}')
+
+# func(age=18,name='张三')
+# func('dengchao',18)
+
+
+# def func(*args):
+#     '''
+#     可变参数：数字求和
+#     :param args
+#     :return:
+#     '''
+#     print(f'数据内容:{args} 数据类型:{type(args)}')
+#
+# func(11,22)
+# func(11,22,33)
+#
+# def func(num1, num2):
+#     return num1 + num2
+#
+# res = func(1,2)
+# print(res)
+
+# def func(num1, num2):
+#     return num1,num2,num1 + num2
+# # res = func(1,2)
+# # print(f'返回值:{res} 返回值类型:{type(res)}')
+#
+# x, y, z = func(1, 2)
+# print(f'返回值:{x} {y} {z}')
+
+# def func():
+#     global name
+#     name = '张三'
+#
+#     print(f'函数内使用局部变量:{name}')
+#
+#
+# func()
+#
+# print(f'函数外使用全局变量:{name}')
+
+def out():
+    name = '张三'
+    print(f'函数内部使用变量：{name}')
+
+    def inner():
+        nonlocal name
+        name = '李四'
+        print(f'嵌套函数内部使用变量：{name}')
+
+    inner()
+
+    print(f'函数内部使用变量：{name}')
+
+
+out()

@@ -661,3 +661,162 @@ print(f'深拷贝的列表元素数据地址：{id(new_lst1[0])}  {id(new_lst1[-
 # 这里可以看到，深拷贝的列表元素如果是不可变的（lst1[0]），数据地址就不会变；深拷贝的列表元素如果是可变的（lst1[-1]），数据地址就会变；
 
 ```
+
+
+# 函数
+1. 函数定义
+```text
+#函数定义
+def 函数名():
+    函数体代码
+    
+#函数调用
+函数名()
+```
+2. pass占位符：使用pass占位符先搭建好框架，再去填充函数中的代码细节
+
+```python
+def func():
+    pass
+```
+3. 函数注释：函数体中的第一行编写函数注释
+```python
+def func():
+    """
+    函数的注释内容
+    :return: 返回值
+    """
+```
+4. 函数的参数：函数名(变量1，变量2) ，这种叫形参
+```python
+def func(name, age):
+    print(f'姓名:{name} 年龄:{age}')
+
+func('张三', 18)
+```
+1️⃣ 位置参数：传入的实际参数需要根据形式参数的位置和个数进行创参，如果个数不一致报错，如果位置不一致输出的内容容易混淆，原因就是python的参数可以不用在定义的时候指定参数类型 <br>
+2️⃣ 关键字参数：再调用函数时，不需要按照形式参数的位置来传参，但是个数还是要一致,实际就是将实际参数和形式参数绑定在一起 <br>
+```python
+
+def func(name, age):
+    print(f'姓名:{name} 年龄:{age}')
+
+func(age=18,name='张三')
+
+```
+3️⃣ 默认参数：在定义方法的时候，可以指定形式参数的默认值，再调用的时候也可以给这个形式参数传值，但是新值会覆盖默认值 <br>
+```python
+
+# 默认参数只能放在位置参数的后面，放前面会报错
+def func(name, age=18):
+    print(f'姓名:{name} 年龄:{age}')
+    
+# 下面的定义方式就会报错
+def func( age=18, name):
+    print(f'姓名:{name} 年龄:{age}')
+
+func('dengchao') #直接使用默认值
+func('dengchao', 28) # 覆盖默认值
+
+```
+4️⃣ 可变参数：定义函数时，传入的参数个数不确定, *args -> arguments -> 传入的数据以元组形式存放
+```python
+def func(*args):
+    '''
+    可变参数：数字求和
+    :param args
+    :return:
+    '''
+    print(f'数据内容:{args} 数据类型:{type(args)}')
+
+func(11,22) # 数据内容:(11, 22) 数据类型:<class 'tuple'>
+func(11,22,33) # 数据内容:(11, 22, 33) 数据类型:<class 'tuple'>
+```
+
+5️⃣ 可变关键字参数：使用 **kwargs 关键字，以字典的形式存储数据，使用起来更加灵活
+```python
+def func(**kwargs):
+    print(f'数据内容:{kwargs} 数据类型:{type(kwargs)}')
+
+func(name='dengchao') # 数据内容:{'name': 'dengchao'} 数据类型:<class 'dict'>
+func(name='dengchao',age=18) # 数据内容:{'name': 'dengchao', 'age': 18} 数据类型:<class 'dict'>
+```
+5. 函数的返回值,如果返回为空或者没有返回值，直接打印不会报错，会打印None
+```python
+def func(num1, num2):
+    return num1 + num2
+
+res = func(1,2)
+print(func(1,2))
+
+```
+1️⃣多个返回值，是以元组的形式存放的, 同时可以直接进行元组解包，就是定义与返回值相同数量的变量来接收返回值
+```python
+def func(num1, num2):
+    return num1,num2,num1 + num2
+# res = func(1,2)
+
+# 返回值:(1, 2, 3) 返回值类型:<class 'tuple'>
+# print(f'返回值:{res} 返回值类型:{type(res)}') 
+
+# 元组解包，三个返回值，用三个变量去接
+x, z, y = func(1, 2)
+print(f'返回值:{x} {y} {z}') 
+
+```
+
+6. 函数变量的作用域
+1️⃣ 函数内的局部变量只能在函数内使用，因为函数执行完后变量就会被销毁
+2️⃣ 可以在函数内使用global关键字将局部变量声明为全局变量
+```python
+
+def func():
+    global name
+    name = '张三'
+    
+    print(f'函数内使用局部变量:{name}') # 函数内使用局部变量:张三
+
+func()
+
+print(f'函数外使用局部变量:{name}') # 函数外使用全局变量:张三
+
+```
+7. 嵌套函数, 下面有几个细节需要注意
+```python
+def out():
+    
+    name = '张三'
+    print(f'函数内部使用变量：{name}')
+    
+    # 函数内部可以直接定义函数，并使用
+    def inner():
+        # 这里的name变量和上层的name变量同名，但是这个方法里面优先使用方法中定义的name变量，如果这个方法中没有定义就会找上层的name变量
+        # 如果想要这里的修改对上层的name生效，可以使用nonlocal关键字
+        # name = '李四'
+        nonlocal name
+        name = '李四'
+        print(f'嵌套函数内部使用变量：{name}')
+        
+    inner()
+        
+    # inner方法中对name进行了重新赋值，但是inner方法中的name变量只属于inner方法，修改了也不会影响上层的同名变量
+    print(f'函数内部使用变量：{name}')
+    
+out()
+
+```
+
+# 异常处理
+语法格式：使用`try ... except ... `关键字
+
+```python
+try:
+    被检测的代码块
+except Exception as e: # 将错误提示信息存放到变量e中
+    捕获到异常时的处理代码
+else:
+    未出现异常的处理代码
+finally:
+    一定会执行的代码
+```
+异常类型：基类Exception、ValueError
