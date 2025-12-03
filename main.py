@@ -1,5 +1,5 @@
 # 这是一个示例 Python 脚本。
-
+import math
 
 # 按 Shift+F10 执行或将其替换为您的代码。
 # 按 双击 Shift 在所有地方搜索类、文件、工具窗口、操作和设置。
@@ -257,18 +257,40 @@ data = [-9,-7,-5,-3,-1,0,1,3,4,5,6,7] # 列表
 #
 # print(f'函数外使用全局变量:{name}')
 
-def out():
-    name = '张三'
-    print(f'函数内部使用变量：{name}')
+# def out():
+#     name = '张三'
+#     print(f'函数内部使用变量：{name}')
+#
+#     def inner():
+#         nonlocal name
+#         name = '李四'
+#         print(f'嵌套函数内部使用变量：{name}')
+#
+#     inner()
+#
+#     print(f'函数内部使用变量：{name}')
+#
+#
+# out()
 
-    def inner():
-        nonlocal name
-        name = '李四'
-        print(f'嵌套函数内部使用变量：{name}')
+# try:
+#     user = input('输入用户名：')
+#     print(math.pi)
+#     if len(user) >= 20:
+#         raise Exception('用户名超长')
+#     else:
+#         print(f'用户名:{user}')
+# except Exception as e:
+#     print(f'异常:{e}')
 
-    inner()
+# import random
+# print(random.uniform(1,5))
+#
+# for i in range(100):
+#     print(random.randint(1, 5))
 
-    print(f'函数内部使用变量：{name}')
-
-
-out()
+import string
+print(string.digits)
+print(string.ascii_letters) # 所有大小写字母
+print(string.ascii_lowercase) # 所有小写字母
+print(string.ascii_uppercase) # 所有大写字母

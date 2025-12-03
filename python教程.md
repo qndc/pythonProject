@@ -819,4 +819,53 @@ else:
 finally:
     一定会执行的代码
 ```
-异常类型：基类Exception、ValueError
+1. 常见的异常类型
+基类Exception、ValueError（数据转换报错）、AttributeError（使用的方法不存在）等
+
+2. 自定义异常
+格式：raise Exception('错误提示信息')
+```python
+try:
+    user = input('输入用户名：')
+    if len(user) >= 20:
+        raise Exception('用户名超长')
+    else:
+        print(f'用户名:{user}')
+except Exception as e:
+    print(f'异常:{e}')
+```
+3. 异常的传递：如果函数内部出现异常，异常会沿着调用链向上传递，直到被except捕获，如果没有捕获异常，程序会崩溃报错
+
+# 模块
+概念：一个简单的代码封装和重用机制。模块通常保存在一个.py文件中，每个文件定义一个模块，文件名就是模块名<br>
+分类：
+1. 内置模块
+```python
+import copy
+# copy模块
+# 深拷贝
+copy.deepcopy()
+# 浅拷贝
+copy.copy()
+
+# math模块
+math.pi
+# 向上取整 
+math.floor()
+# 向下取整 
+math.ceil()
+
+# random模块
+import random
+print(random.uniform(1,5)) # 获取1-5的随机数，带随机小数
+print(random.randint(1,5)) # 获取1-5的随机整数，[1,5]
+
+# string模块
+import string
+print(string.digits) # 0-9的十进制数字
+print(string.ascii_letters) # 所有大小写字母
+print(string.ascii_lowercase) # 所有小写字母
+print(string.ascii_uppercase) # 所有大写字母
+
+```
+
